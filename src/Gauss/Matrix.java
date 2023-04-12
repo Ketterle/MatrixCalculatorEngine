@@ -39,7 +39,7 @@ public class Matrix {
                 nonZeroRow++;
             }
         }
-        for(int i=0;i<this.columns;i++) {
+        for(int i=0;i<Math.min(this.rows,this.columns);i++) {
             int currentRow =i;
             int superiorPivot=0;
             if(currentRow <this.rows-1) {
@@ -153,8 +153,8 @@ public class Matrix {
 
     public int[][] copyMatrix() {
         int[][] matrixToBeReturned = new int[this.rows][this.columns];
-        for(int i=0;i<this.columns;i++) {
-            for(int j=0;j<this.rows;j++) {
+        for(int i=0;i<this.rows;i++) {
+            for(int j=0;j<this.columns;j++) {
                 matrixToBeReturned[i][j]=this.matrix[i][j];
             }
         }
