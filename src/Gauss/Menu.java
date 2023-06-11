@@ -2,13 +2,13 @@ package Gauss;
 
 import java.util.Scanner;
 
-public class Utils {
+public class Menu {
     public static Scanner sc = new Scanner(System.in);
     public static Matrix matrix;
 
     public static void menu() {
         boolean keepExecution=true;
-        String option="";
+        String option;
         while(keepExecution) {
             System.out.println("Choose an option: ");
             System.out.println("1: Generate matrix");

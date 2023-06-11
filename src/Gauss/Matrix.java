@@ -1,11 +1,12 @@
-package Gauss;
+/* This program contains several typical matrix calculations which can be used as your matrix app engine */
 
+package Gauss;
 public class Matrix {
     public static final int NORMALIZED=100;
     public static final int TOPRANGE=10;
     private int[][] matrix;
-    private int rows;
-    private int columns;
+    private final int rows;
+    private final int columns;
 
     public Matrix(int rows, int columns) {
         this.rows=rows;
@@ -13,6 +14,7 @@ public class Matrix {
         this.matrix=new int[rows][columns];
         this.fillMatrix();
     }
+    /* Prints the matrix */
     public void printMatrix() {
         for(int i=0;i<rows;i++) {
             for(int j=0;j<columns;j++) {
@@ -21,6 +23,7 @@ public class Matrix {
             System.out.println();
         }
     }
+    /* Triangulates the matrix */
     public Matrix gaussMethod() {
         int[][] auxMatrix=this.copyMatrix();
         if(auxMatrix[0][0]==0) {
@@ -51,8 +54,8 @@ public class Matrix {
             }
             for(int j = currentRow; j<this.rows-1; j++) {
                 int inferiorPivot=auxMatrix[j+1][i];
-                int superiorPivotNormalized=superiorPivot/Utils.GCF(inferiorPivot,superiorPivot);
-                int inferiorPivotNormalized=inferiorPivot/Utils.GCF(inferiorPivot,superiorPivot);
+                int superiorPivotNormalized=superiorPivot/ Menu.GCF(inferiorPivot,superiorPivot);
+                int inferiorPivotNormalized=inferiorPivot/ Menu.GCF(inferiorPivot,superiorPivot);
                 if(inferiorPivot==0) {
                     continue;
                 }
@@ -65,6 +68,7 @@ public class Matrix {
         matrixToBeReturned.matrix=auxMatrix;
         return matrixToBeReturned;
     }
+    /* Fills the matrix with random integers */
     public void fillMatrix() {
         for(int i=0;i<this.rows;i++) {
             for(int j=0;j<this.columns;j++) {
@@ -72,14 +76,14 @@ public class Matrix {
             }
         }
     }
-
+    /* Calculates matrix determinant */
     public Integer determinantCalculator() {
         if(this.rows!=this.columns) {
             System.out.println("This is not a square matrix!");
             return null;
         }
         else {
-            Double determinant = 1.0;
+            double determinant = 1.0;
             double[][] auxMatrix=this.transformMatrixToDouble();
             if (auxMatrix[0][0] == 0.0) {
                 double[] bufferRow = new double[this.columns];
@@ -120,9 +124,10 @@ public class Matrix {
 
                 determinant *= auxMatrix[i][i];
             }
-            return new Integer(determinant.intValue());
+            return (int) determinant;
         }
     }
+    /* Calculates the matrix rank */
     public int rankCalculator() {
         this.gaussMethod();
         int rank=0;
@@ -136,7 +141,7 @@ public class Matrix {
         }
         return rank;
     }
-
+    /* Calculates matrix trace */
     public Integer traceCalculator() {
         Integer trace=0;
         if(this.rows!=this.columns) {
@@ -154,9 +159,7 @@ public class Matrix {
     public int[][] copyMatrix() {
         int[][] matrixToBeReturned = new int[this.rows][this.columns];
         for(int i=0;i<this.rows;i++) {
-            for(int j=0;j<this.columns;j++) {
-                matrixToBeReturned[i][j]=this.matrix[i][j];
-            }
+            System.arraycopy(this.matrix[i], 0, matrixToBeReturned[i], 0, this.columns);
         }
         return matrixToBeReturned;
     }
